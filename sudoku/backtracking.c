@@ -9,7 +9,6 @@
 #define UNASSIGNED 0
 #define true 1
 #define false 0
-#define int long
  
 // N is used for size of Sudoku grid. Size will be NxN
 #define N 9
@@ -18,7 +17,7 @@
 int FindUnassignedLocation(int grid[N][N], int *row, int *col);
  
 // Checks whether it will be legal to assign num to the given row,col
-int isSafe(int grid[N][N], int row, int col, int num);
+int isSafe(int grid[N][N], int row, int col, long num);
 
 void printGrid(int grind[N][N]);
 
@@ -34,13 +33,13 @@ void setCandidates(int *ptr[N])
       for(int j = 0; j <= i; j++) 
       {        
         a = 0;
-        if(ptr[j] == r)
+        if(*ptr[j] == r)
           break;
         a = 1;
       }
       
     }while(a != 1);
-    ptr[i] = r;
+    *ptr[i] = r;
     
   }
 }
@@ -57,7 +56,7 @@ int SolveSudoku(int grid[N][N])
        return true; // success!
  
     // consider digits 1 to 9
-    int num[N] = {0,0,0,0,0,0,0,0,0};
+    long num[N] = {0,0,0,0,0,0,0,0,0};
     setCandidates(&num);
 
     for (int i = 0; i <= 8; i++)
@@ -95,7 +94,7 @@ int FindUnassignedLocation(int grid[N][N], int *row, int *col)
  
 /* Returns a intean which indicates whether any assigned entry
    in the specified row matches the given number. */
-int UsedInRow(int grid[N][N], int row, int num)
+int UsedInRow(int grid[N][N], int row, long num)
 {
     for (int col = 0; col < N; col++)
         if (grid[row][col] == num)
@@ -105,7 +104,7 @@ int UsedInRow(int grid[N][N], int row, int num)
  
 /* Returns a intean which indicates whether any assigned entry
    in the specified column matches the given number. */
-int UsedInCol(int grid[N][N], int col, int num)
+int UsedInCol(int grid[N][N], int col, long num)
 {
     for (int row = 0; row < N; row++)
         if (grid[row][col] == num)
@@ -115,7 +114,7 @@ int UsedInCol(int grid[N][N], int col, int num)
  
 /* Returns a intean which indicates whether any assigned entry
    within the specified 3x3 box matches the given number. */
-int UsedInBox(int grid[N][N], int boxStartRow, int boxStartCol, int num)
+int UsedInBox(int grid[N][N], int boxStartRow, int boxStartCol, long num)
 {
     for (int row = 0; row < 3; row++)
         for (int col = 0; col < 3; col++)
@@ -126,7 +125,7 @@ int UsedInBox(int grid[N][N], int boxStartRow, int boxStartCol, int num)
  
 /* Returns a intean which indicates whether it will be legal to assign
    num to the given row,col location. */
-int isSafe(int grid[N][N], int row, int col, int num)
+int isSafe(int grid[N][N], int row, int col, long num)
 {
     /* Check if 'num' is not already placed in current row,
        current column and current 3x3 box */
@@ -149,8 +148,8 @@ void printGrid(int grid[N][N])
 
 void startingGrid(int *grid[N][N])
 {
-  srand(time(NULL));
   
+
   int all = 0;
 
   for(int row = 0; row < N; row++)
@@ -159,7 +158,7 @@ void startingGrid(int *grid[N][N])
     {
       int r = rand() % 100;
 
-      if(r <= 5)
+      if(all == 0 || all == 17 || all == 75)
           *grid[row][col] = (rand() % N)+1;
       else
         *grid[row][col] = 0;  
@@ -185,26 +184,9 @@ int main()
     //                   {0, 0, 5, 2, 0, 6, 3, 0, 0}};
 
   int grid[N][N];
-
-  int all = 0;
-
-  for(int row = 0; row < N; row++)
-  {
-    for (int col = 0; col < N; col++)
-    {
-      int r = rand() % 100;
-
-      if(all == 0 || all == 17 || all == 75)
-          grid[row][col] = (rand() % N)+1;
-      else
-        grid[row][col] = 0;  
-
-      all++;
-    }
-  }
-
+  startingGrid(&grid);
   printGrid(grid);
-  // startingGrid(&grid);
+  
 
   if (SolveSudoku(grid) == true)
         printGrid(grid);
