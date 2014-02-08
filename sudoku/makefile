@@ -1,11 +1,16 @@
-sudoku: main.o
-	gcc -Wall -o $< $^
-main.o: main.c
-	gcc -Wall -c $<
+CC = gcc -Wall
+Objectfiles = main.o helpers.o
 
-all: clear sudoku run
+sudoku: $(Objectfiles)
+	$(CC) -o $@ $^
+$(Objectfiles): 
+	$(CC) -c $<
+main.o: main.c helpers.h
+helpers.o: helpers.c	
+
+all: clean sudoku run
 	
-clear:
+clean:
 	rm -f *.o sudoku
 run: 
 	./sudoku
