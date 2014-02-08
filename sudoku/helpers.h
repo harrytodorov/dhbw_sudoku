@@ -8,17 +8,33 @@
 #ifndef HELPERS_H
 #define	HELPERS_H
 
-//      int getch()
-//      read unbuffered characters from stdin 
-//      Return value: ASCII Code of input
-//      sets the terminal into non-canonical mode, disables line buffering,
-//      reads a character from stdin and then restores the old terminal status
-//      
+#define START_POS_X 0
+#define START_POS_Y 0
+#define CLEAR printf("\033[2J")
+#define POSITION(Ze, Sp) printf("\033[%d;%dH",Ze,Sp)
+
+/**
+ * 
+ * read unbuffered characters from stdin     
+ * sets the terminal into non-canonical mode, disables line buffering
+ * 
+ * @return ASCII Code of input
+ */
 int getch();
 
+/**
+ * The function takes 2 parameters column and row. 
+ * Positions the cursor there and prints an empty Sudoku field.
+ * 
+ * 
+ */
+void printSudokuField();
 
+/**
+ * Prints the Sudoku welcome screen.
+ */
+void printWelcomeScreen();
 
-void printSudokuField(int y, int x);
 
 #endif	/* HELPERS_H */
 

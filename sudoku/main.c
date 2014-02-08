@@ -14,7 +14,16 @@
  */
 int main(int argc, char** argv) {
 
-    printSudokuField(5,5);
+    int x = 0, y = 0, c;
+    printWelcomeScreen();
+    printf("\n\n\nPress any key to continue...");
+    c = getch();
+    printSudokuField();
+    POSITION(2,2);
+    while((c = getch()) != EOF) {
+        moveInSudokuField(&y, &x, c);
+    }
+    
     return (EXIT_SUCCESS);
 }
 
