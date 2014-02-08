@@ -9,6 +9,7 @@
 #define UNASSIGNED 0
 #define true 1
 #define false 0
+#define int long
  
 // N is used for size of Sudoku grid. Size will be NxN
 #define N 9
