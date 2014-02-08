@@ -36,5 +36,6 @@ void printSudokuField(int y, int x) {
                 printf(" ");
         }
         printf("\n");
+        POSITION(i+1, x);
     }
 }
