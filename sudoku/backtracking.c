@@ -43,11 +43,6 @@ void setCandidates(int *ptr[N])
     ptr[i] = r;
     
   }
-  // for(int i = 0; i < 9; i++)
-  // {
-  //   printf("%d", i);
-  //   printf("%d : %d\n", ptr[i], &ptr[i]);
-  // }
 }
 
 /* Takes a partially filled-in grid and attempts to assign values to
@@ -179,53 +174,42 @@ int main()
 {
   srand(time(NULL));
     // 0 means unassigned cells
-    int grid[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
-                      {5, 2, 0, 0, 0, 0, 0, 0, 0},
-                      {0, 8, 7, 0, 0, 0, 0, 3, 1},
-                      {0, 0, 3, 0, 1, 0, 0, 8, 0},
-                      {9, 0, 0, 8, 6, 3, 0, 0, 5},
-                      {0, 5, 0, 0, 9, 0, 6, 0, 0},
-                      {1, 3, 0, 0, 0, 0, 2, 5, 0},
-                      {0, 0, 0, 0, 0, 0, 0, 7, 4},
-                      {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+    // int grid[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
+    //                   {5, 2, 0, 0, 0, 0, 0, 0, 0},
+    //                   {0, 8, 7, 0, 0, 0, 0, 3, 1},
+    //                   {0, 0, 3, 0, 1, 0, 0, 8, 0},
+    //                   {9, 0, 0, 8, 6, 3, 0, 0, 5},
+    //                   {0, 5, 0, 0, 9, 0, 6, 0, 0},
+    //                   {1, 3, 0, 0, 0, 0, 2, 5, 0},
+    //                   {0, 0, 0, 0, 0, 0, 0, 7, 4},
+    //                   {0, 0, 5, 2, 0, 6, 3, 0, 0}};
 
-    // int grid[N][N];
-  
-    // int all = 0;
+  int grid[N][N];
 
-    // for(int row = 0; row < N; row++)
-    // {
-    //   for (int col = 0; col < N; col++)
-    //   {
-    //     int r = rand() % 100;
+  int all = 0;
 
-    //     if(all == 0 || all == 17 || all == 75)
-    //         grid[row][col] = (rand() % N)+1;
-    //     else
-    //       grid[row][col] = 0;  
+  for(int row = 0; row < N; row++)
+  {
+    for (int col = 0; col < N; col++)
+    {
+      int r = rand() % 100;
 
-    //     all++;
-    //   }
-    // }
+      if(all == 0 || all == 17 || all == 75)
+          grid[row][col] = (rand() % N)+1;
+      else
+        grid[row][col] = 0;  
 
-// FOR TESTING 
-    // int num[N];
-    // setCandidates(&num);
-    // printf("\n\n");
-    // for(int i = 0; i < 9; i++)
-    // {
-    //   printf("%d", i);
-    //   printf("%d : %d\n", num[i], &num[i]);
-    // }
-    // return 0;
+      all++;
+    }
+  }
 
-    printGrid(grid);
-    // startingGrid(&grid);
+  printGrid(grid);
+  // startingGrid(&grid);
 
-    if (SolveSudoku(grid) == true)
-          printGrid(grid);
-    else
-         printf("No solution exists");
- 
-    return 0;
+  if (SolveSudoku(grid) == true)
+        printGrid(grid);
+  else
+       printf("No solution exists");
+
+  return 0;
 }
