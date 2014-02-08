@@ -43,11 +43,11 @@ void setCandidates(int *ptr[N])
     ptr[i] = r;
     
   }
-  for(int i = 0; i < 9; i++)
-  {
-    printf("%d", i);
-    printf("%d : %d\n", ptr[i], &ptr[i]);
-  }
+  // for(int i = 0; i < 9; i++)
+  // {
+  //   printf("%d", i);
+  //   printf("%d : %d\n", ptr[i], &ptr[i]);
+  // }
 }
 
 /* Takes a partially filled-in grid and attempts to assign values to
@@ -65,14 +65,14 @@ int SolveSudoku(int grid[N][N])
     int num[N] = {0,0,0,0,0,0,0,0,0};
     setCandidates(&num);
 
-    for (int num = 1; num <= 9; num++)
+    for (int i = 0; i <= 8; i++)
     {
-        // printf("%d %d %d\n", row, col, num);
+        // printf("%d %d %d\n", row, col, num[i]);
         // if looks promising
-        if (isSafe(grid, row, col, num))
+        if (isSafe(grid, row, col, num[i]))
         {
             // make tentative assignment
-            grid[row][col] = num;
+            grid[row][col] = num[i];
  
             // return, if success, yay!
             if (SolveSudoku(grid))
@@ -208,15 +208,16 @@ int main()
     //   }
     // }
 
-    int num[N];
-    setCandidates(&num);
-    printf("\n\n");
-    for(int i = 0; i < 9; i++)
-    {
-      printf("%d", i);
-      printf("%d : %d\n", num[i], &num[i]);
-    }
-    return 0;
+// FOR TESTING 
+    // int num[N];
+    // setCandidates(&num);
+    // printf("\n\n");
+    // for(int i = 0; i < 9; i++)
+    // {
+    //   printf("%d", i);
+    //   printf("%d : %d\n", num[i], &num[i]);
+    // }
+    // return 0;
 
     printGrid(grid);
     // startingGrid(&grid);
