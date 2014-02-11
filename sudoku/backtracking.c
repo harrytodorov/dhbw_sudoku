@@ -147,7 +147,7 @@ void printGrid(int grid[N][N])
     printf("\n\n");
 }
 
-void startingGrid(int *grid[N][N])
+void startingGrid(int grid[][])
 {
   srand(time(NULL));
   
@@ -160,9 +160,9 @@ void startingGrid(int *grid[N][N])
       int r = rand() % 100;
 
       if(r <= 5)
-          *grid[row][col] = (rand() % N)+1;
+          grid[row][col] = (rand() % N)+1;
       else
-        *grid[row][col] = 0;  
+          grid[row][col] = 0;  
 
       all++;
     }
@@ -174,35 +174,36 @@ int main()
 {
   srand(time(NULL));
     // 0 means unassigned cells
-    // int grid[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
-    //                   {5, 2, 0, 0, 0, 0, 0, 0, 0},
-    //                   {0, 8, 7, 0, 0, 0, 0, 3, 1},
-    //                   {0, 0, 3, 0, 1, 0, 0, 8, 0},
-    //                   {9, 0, 0, 8, 6, 3, 0, 0, 5},
-    //                   {0, 5, 0, 0, 9, 0, 6, 0, 0},
-    //                   {1, 3, 0, 0, 0, 0, 2, 5, 0},
-    //                   {0, 0, 0, 0, 0, 0, 0, 7, 4},
-    //                   {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+//     int grid[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
+//                       {5, 2, 0, 0, 0, 0, 0, 0, 0},
+//                       {0, 8, 7, 0, 0, 0, 0, 3, 1},
+//                       {0, 0, 3, 0, 1, 0, 0, 8, 0},
+//                       {9, 0, 0, 8, 6, 3, 0, 0, 5},
+//                       {0, 5, 0, 0, 9, 0, 6, 0, 0},
+//                       {1, 3, 0, 0, 0, 0, 2, 5, 0},
+//                       {0, 0, 0, 0, 0, 0, 0, 7, 4},
+//                       {0, 0, 5, 2, 0, 6, 3, 0, 0}};
 
   int grid[N][N];
 
-  int all = 0;
+//  int all = 0;
+//
+//  for(int row = 0; row < N; row++)
+//  {
+//    for (int col = 0; col < N; col++)
+//    {
+//      int r = rand() % 100;
+//
+//      if(all == 0 || all == 17 || all == 75)
+//          grid[row][col] = (rand() % N)+1;
+//      else
+//        grid[row][col] = 0;  
+//
+//      all++;
+//    }
+//  }
 
-  for(int row = 0; row < N; row++)
-  {
-    for (int col = 0; col < N; col++)
-    {
-      int r = rand() % 100;
-
-      if(all == 0 || all == 17 || all == 75)
-          grid[row][col] = (rand() % N)+1;
-      else
-        grid[row][col] = 0;  
-
-      all++;
-    }
-  }
-
+  startingGrid(grid);
   printGrid(grid);
   // startingGrid(&grid);
 
