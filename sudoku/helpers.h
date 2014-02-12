@@ -43,6 +43,13 @@ void printSudoku(int sudoku[9][9]);
 
 void printDigitToField(int y, int x, int c, int sudoku[9][9]);
 
+int loadSudokuFromFile(int sudoku[9][9]);
+
+void generateSudoku(int grid[9][9]);
+
+void startNewGame(int grid[9][9]);
+
+void aboutSudoku();
 
 #endif	/* HELPERS_H */
 
