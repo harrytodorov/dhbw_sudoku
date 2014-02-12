@@ -33,7 +33,15 @@ void printSudokuField();
 /**
  * Prints the Sudoku welcome screen.
  */
-void printWelcomeScreen();
+void printWelcomeScreen(int c);
+
+/**
+ * 
+ * @param sudoku
+ */
+void printSudoku(int sudoku[9][9]);
+
+void printDigitToField(int y, int x, int c, int sudoku[9][9]);
 
 
 #endif	/* HELPERS_H */

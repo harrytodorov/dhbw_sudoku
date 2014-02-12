@@ -1,6 +1,8 @@
 #include <termios.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include "helpers.h"
 
 int allowedPosX[9] = {2, 5, 8, 13, 16, 19, 23, 26, 29};
@@ -87,7 +89,7 @@ void moveInSudokuField(int *y, int *x, int c) {
         POSITION(allowedPosY[*y], allowedPosX[*x]);
 }
 
-void printWelcomeScreen() {
+void printWelcomeScreen(int c) {
     printf("\033[32m+++++++++++++++++++++++++++++++++++++++++++++++\033[32m\n");
     printf("+   ***   *   *  ****    ***   *   *  *   *   +\033[32m\n");
     printf("+  *      *   *  *   *  *   *  *  *   *   *   +\033[32m\n");
@@ -96,7 +98,25 @@ void printWelcomeScreen() {
     printf("+      *  *   *  *   *  *   *  * *    *   *   +\033[32m\n");
     printf("+      *  *   *  *   *  *   *  *  *   *   *   +\033[32m\n");
     printf("+   ***    ***   ****    ***   *   *   ***    +\033[32m\n");
-    printf("+++++++++++++++++++++++++++++++++++++++++++++++\033[0m \n");    
+    printf("+++++++++++++++++++++++++++++++++++++++++++++++\033[0m \n");   
+    
+    printf("\n\n\nPress any key to continue...");
+    c = getch();
 }
 
+void printSudoku(int sudoku[9][9]) {
+    int i, j;
+    for(i = 0; i < 9; i++) {
+        for(j = 0; j < 9; j++) {
+            POSITION(allowedPosY[i], allowedPosX[j]);
+            printf("%d", sudoku[i][j]);
+        }
+    }
+}
+
+void printDigitToField(int y, int x, int c, int sudoku[9][9]) {
+        POSITION(allowedPosY[y], allowedPosX[x]);
+        printf("%d", c - '0');
+        sudoku[y][x] = c - '0';
+}
 
