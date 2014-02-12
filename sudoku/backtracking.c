@@ -1,21 +1,16 @@
-// A Backtracking program  in C++ to solve Sudoku problem
 #include <stdio.h>
 #include <stdint.h>
 #include <time.h>
 #include <stdlib.h>
 
- // UNASSIGNED is used for empty cells in sudoku grid
 #define UNASSIGNED 0
 #define true 1
 #define false 0
  
-// N is used for size of Sudoku grid. Size will be NxN
 #define N 9
  
-// This function finds an entry in grid that is still unassigned
 int FindUnassignedLocation(int grid[N][N], int *row, int *col);
  
-// Checks whether it will be legal to assign num to the given row,col
 int isSafe(int grid[N][N], int row, int col, long num);
 
 void printGrid(int grind[N][N]);
@@ -43,45 +38,30 @@ void setCandidates(int *ptr[N])
   }
 }
 
-/* Takes a partially filled-in grid and attempts to assign values to
-  all unassigned locations in such a way to meet the requirements
-  for Sudoku solution (non-duplication across rows, columns, and boxes) */
 int SolveSudoku(int grid[N][N])
 {
     int row, col;
-    // printGrid(grid);
-    // If there is no unassigned location, we are done
     if (!FindUnassignedLocation(grid, &row, &col))
-       return true; // success!
+       return true; 
  
-    // consider digits 1 to 9
     long num[N] = {0,0,0,0,0,0,0,0,0};
     setCandidates(&num);
 
     for (int i = 0; i <= 8; i++)
     {
-        // printf("%d %d %d\n", row, col, num[i]);
-        // if looks promising
         if (isSafe(grid, row, col, num[i]))
         {
-            // make tentative assignment
             grid[row][col] = num[i];
- 
-            // return, if success, yay!
+
             if (SolveSudoku(grid))
                 return true;
  
-            // failure, unmake & try again
             grid[row][col] = UNASSIGNED;
         }
     }
-    return false; // this triggers backtracking
+    return false; 
 }
  
-/* Searches the grid to find an entry that is still unassigned. If
-   found, the reference parameters row, col will be set the location
-   that is unassigned, and true is returned. If no unassigned entries
-   remain, false is returned. */
 int FindUnassignedLocation(int grid[N][N], int *row, int *col)
 {
     for (*row = 0; *row < N; *row = *row+1)
@@ -91,8 +71,6 @@ int FindUnassignedLocation(int grid[N][N], int *row, int *col)
     return false;
 }
  
-/* Returns a intean which indicates whether any assigned entry
-   in the specified row matches the given number. */
 int UsedInRow(int grid[N][N], int row, long num)
 {
     for (int col = 0; col < N; col++)
@@ -101,8 +79,6 @@ int UsedInRow(int grid[N][N], int row, long num)
     return false;
 }
  
-/* Returns a intean which indicates whether any assigned entry
-   in the specified column matches the given number. */
 int UsedInCol(int grid[N][N], int col, long num)
 {
     for (int row = 0; row < N; row++)
@@ -111,8 +87,6 @@ int UsedInCol(int grid[N][N], int col, long num)
     return false;
 }
  
-/* Returns a intean which indicates whether any assigned entry
-   within the specified 3x3 box matches the given number. */
 int UsedInBox(int grid[N][N], int boxStartRow, int boxStartCol, long num)
 {
     for (int row = 0; row < 3; row++)
@@ -122,18 +96,13 @@ int UsedInBox(int grid[N][N], int boxStartRow, int boxStartCol, long num)
     return false;
 }
  
-/* Returns a intean which indicates whether it will be legal to assign
-   num to the given row,col location. */
 int isSafe(int grid[N][N], int row, int col, long num)
 {
-    /* Check if 'num' is not already placed in current row,
-       current column and current 3x3 box */
     return !UsedInRow(grid, row, num) &&
            !UsedInCol(grid, col, num) &&
            !UsedInBox(grid, row - row%3 , col - col%3, num);
 }
  
-/* A utility function to print grid  */
 void printGrid(int grid[N][N])
 {
     for (int row = 0; row < N; row++)
