@@ -109,7 +109,7 @@ void printWelcomeScreen() {
     printf("+   ***    ***   ****    ***   *   *   ***    +\n");
     printf("+++++++++++++++++++++++++++++++++++++++++++++++\n");
 
-    printf("\n\n\nPressstartNewGame any key to continue...");
+    printf("\n\n\nPress any key to continue...");
     c = getch();
 }
 
@@ -131,7 +131,7 @@ void printDigitToField(int y, int x, int c, int sudoku[9][9]) {
     POSITION(allowedPosY[y], allowedPosX[x]);
     printf("%d", c);
     sudoku[y][x] = c;
-    
+
 }
 
 void printMenu() {
@@ -220,7 +220,7 @@ void loadSudokuFromFile(int sudoku[9][9]) {
     char name[20];
     int c, num, x, y;
     copySudokuToSolved(sudoku, solvedSudoku);
-    if(SolveSudoku(solvedSudoku)) {
+    if (SolveSudoku(solvedSudoku)) {
         CLEAR;
         POSITION(0, 0);
         printf("\nGive a username: ");
@@ -236,8 +236,8 @@ void loadSudokuFromFile(int sudoku[9][9]) {
                     moveInSudokuField(&y, &x, c);
                 else if (c == 'q')
                     break;
-                else if(c == 'y' || c == 'Y') 
-                        saveSudoku(sudoku);
+                else if (c == 'y' || c == 'Y')
+                    saveSudoku(sudoku);
             } else if (isdigit(c)) {
                 if (notEditable[y][x]) {
                     num = c - '0';
@@ -264,18 +264,18 @@ void removeRandomNumber(int grid[9][9], int complexity, bool notEditable[9][9]) 
     int i, j;
     int removed = 0;
     srand(time(NULL));
-    do{
-    for (i = 0; i < 9; i++) {
-        for (j = 0; j < 9; j++) {
-                if((rand() % 2) == 1) {
-                    if(grid[i][j] != 0) {
+    do {
+        for (i = 0; i < 9; i++) {
+            for (j = 0; j < 9; j++) {
+                if ((rand() % 2) == 1) {
+                    if (grid[i][j] != 0) {
                         grid[i][j] = 0;
                         removed++;
                     }
                     notEditable[i][j] = grid[i][j] == 0;
+                }
             }
         }
-    }
     } while (removed <= complexity);
 }
 
@@ -295,17 +295,17 @@ void newGame(int grid[9][9], bool notEditable[9][9]) {
     printSudokuField();
     printSudoku(grid);
     printUserData(name);
-    POSITION(2,2);
-    while((c = getch()) != EOF) {
-        if(isalpha(c)) {
-            if(c == 'w' || c == 'W' || c == 'A' || c == 'a' || c == 'S' || c == 's' || c == 'D' || c == 'd')
+    POSITION(2, 2);
+    while ((c = getch()) != EOF) {
+        if (isalpha(c)) {
+            if (c == 'w' || c == 'W' || c == 'A' || c == 'a' || c == 'S' || c == 's' || c == 'D' || c == 'd')
                 moveInSudokuField(&y, &x, c);
-            else if(c == 'q' || c == 'Q') 
+            else if (c == 'q' || c == 'Q')
                 break;
-            else if(c == 'y' || c == 'Y') 
+            else if (c == 'y' || c == 'Y')
                 saveSudoku(grid);
-        } else if(isdigit(c)) {
-            if(notEditable[y][x]) {
+        } else if (isdigit(c)) {
+            if (notEditable[y][x]) {
                 num = c - '0';
                 printDigitToField(y, x, num, grid);
                 if (isSudokuSolved(grid, solvedSudoku)) {
@@ -329,8 +329,8 @@ void printUserData(char name[20]) {
 
 void setArrayToZero(bool notEditable[9][9]) {
     int i, j;
-    for(i = 0; i < 9; i++) {
-        for(j = 0; j < 9; j++)
+    for (i = 0; i < 9; i++) {
+        for (j = 0; j < 9; j++)
             notEditable[i][j] = false;
     }
 }
@@ -348,7 +348,7 @@ bool isSudokuSolved(int grid[9][9], int solvedSudoku[9][9]) {
     int i, j;
     for (i = 0; i < 9; i++) {
         for (j = 0; j < 9; j++) {
-            if(grid[i][j] != solvedSudoku[i][j])
+            if (grid[i][j] != solvedSudoku[i][j])
                 return false;
         }
     }
@@ -377,7 +377,7 @@ void notEditables(int sudoku[9][9], bool notEditables[9][9]) {
 }
 
 void saveSudoku(int sudoku[9][9]) {
-    POSITION(0,0);
+    POSITION(0, 0);
     CLEAR;
     FILE *fp;
     char fileName[MAXCHAR];
@@ -385,17 +385,18 @@ void saveSudoku(int sudoku[9][9]) {
     printf("\n\n\nSave sudoku as: ");
     scanf("%s", fileName);
     fp = fopen(fileName, "w");
-    if(fp == NULL) {
+    if (fp == NULL) {
         perror(strerror(errno));
     }
     int i, j;
-    for(i = 0; i < 9; i++) {
-        for(j = 0; j < 9; j++) {
-            if(sudoku[i][j] == 0) {
-                putc('.', fp);
+    for (i = 0; i < 9; i++) {
+        for (j = 0; j < 9; j++) {
+            if (sudoku[i][j] == 0) {
+                fprintf(fp, ".");
             } else
-                putc(sudoku[i][j], fp);
-        }       
+                fprintf(fp, "%d", sudoku[i][j]);
+        }
+        fprintf(fp, "\n");
     }
     fclose(fp);
     printf("\nSudoku saved successfully!\n\n");
