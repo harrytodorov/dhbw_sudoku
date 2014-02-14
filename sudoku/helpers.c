@@ -109,7 +109,7 @@ void printWelcomeScreen() {
     printf("+   ***    ***   ****    ***   *   *   ***    +\n");
     printf("+++++++++++++++++++++++++++++++++++++++++++++++\n");
 
-    printf("\n\n\nPress any key to continue...");
+    printf("\n\n\nPressstartNewGame any key to continue...");
     c = getch();
 }
 
@@ -215,37 +215,43 @@ void loadSudokuFromFile(int sudoku[9][9]) {
         }
         i++;
     }
-    
     int solvedSudoku[9][9];
     bool notEditable[9][9];
     char name[20];
     int c, num, x, y;
     copySudokuToSolved(sudoku, solvedSudoku);
-    SolveSudoku(solvedSudoku);
-    CLEAR;
-    POSITION(0, 0);
-    printf("\nGive a username: ");
-    scanf("%s", name);
-    notEditables(sudoku, notEditable);
-    printSudokuField();
-    printSudoku(sudoku);
-    printUserData(name);
-    POSITION(2,2);
-    while((c = getch()) != EOF) {
-        if(isalpha(c)) {
-            if(c == 'w' || c == 'W' || c == 'A' || c == 'a' || c == 'S' || c == 's' || c == 'D' || c == 'd')
-                moveInSudokuField(&y, &x, c);
-            else if(c == 'q') 
-                break;
-        } else if(isdigit(c)) {
-            if(notEditable[y][x]) {
-                num = c - '0';
-                printDigitToField(y, x, num, sudoku);
-                if (isSudokuSolved(sudoku, solvedSudoku)) {
-                    finalScreen();
+    if(SolveSudoku(solvedSudoku)) {
+        CLEAR;
+        POSITION(0, 0);
+        printf("\nGive a username: ");
+        scanf("%s", name);
+        notEditables(sudoku, notEditable);
+        printSudokuField();
+        printSudoku(sudoku);
+        printUserData(name);
+        POSITION(2, 2);
+        while ((c = getch()) != EOF) {
+            if (isalpha(c)) {
+                if (c == 'w' || c == 'W' || c == 'A' || c == 'a' || c == 'S' || c == 's' || c == 'D' || c == 'd')
+                    moveInSudokuField(&y, &x, c);
+                else if (c == 'q')
+                    break;
+                else if(c == 'y' || c == 'Y') 
+                        saveSudoku(sudoku);
+            } else if (isdigit(c)) {
+                if (notEditable[y][x]) {
+                    num = c - '0';
+                    printDigitToField(y, x, num, sudoku);
+                    if (isSudokuSolved(sudoku, solvedSudoku)) {
+                        finalScreen();
+                    }
                 }
             }
         }
+    } else {
+        POSITION(0, 0);
+        CLEAR;
+        printf("\n\n\nThis sudoku cannot be solved.");
     }
 }
 
@@ -385,8 +391,11 @@ void saveSudoku(int sudoku[9][9]) {
     int i, j;
     for(i = 0; i < 9; i++) {
         for(j = 0; j < 9; j++) {
-            putc(sudoku[i][j], fp);
-        }
+            if(sudoku[i][j] == 0) {
+                putc('.', fp);
+            } else
+                putc(sudoku[i][j], fp);
+        }       
     }
     fclose(fp);
     printf("\nSudoku saved successfully!\n\n");
