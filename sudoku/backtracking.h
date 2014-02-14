@@ -12,5 +12,7 @@ void generateSudoku(int grid[9][9]);
 
 int isSafe(int grid[9][9], int row, int col, long num);
 
+int SolveSudoku(int grid[9][9]);
+
 #endif	/* BACKTRACKING_H */
 

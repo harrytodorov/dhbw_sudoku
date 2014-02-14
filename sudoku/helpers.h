@@ -8,6 +8,8 @@
 #ifndef HELPERS_H
 #define	HELPERS_H
 
+#include <stdbool.h>
+
 #define START_POS_X 0
 #define START_POS_Y 0
 #define CLEAR printf("\033[2J")
@@ -33,7 +35,7 @@ void printSudokuField();
 /**
  * Prints the Sudoku welcome screen.
  */
-void printWelcomeScreen(int c);
+void printWelcomeScreen();
 
 /**
  * 
@@ -43,13 +45,35 @@ void printSudoku(int sudoku[9][9]);
 
 void printDigitToField(int y, int x, int c, int sudoku[9][9]);
 
-int loadSudokuFromFile(int sudoku[9][9]);
+void loadSudokuFromFile(int sudoku[9][9]);
 
 void generateSudoku(int grid[9][9]);
 
 void startNewGame(int grid[9][9]);
 
 void aboutSudoku();
+
+void sudokuExit(void);
+
+void removeRandomNumber(int grid[9][9], int complexity, bool notEditable[9][9]);
+
+void printUserData(char name[20]);
+
+void setArrayToZero(bool notEditable[9][9]);
+
+void newGame(int grid[9][9], bool notEditable[9][9]);
+
+void printUserData(char name[20]);
+
+void copySudokuToSolved(int grid[9][9], int solvedSudoku[9][9]);
+
+bool isSudokuSolved(int grid[9][9], int solvedSudoku[9][9]);
+
+void notEditables(int sudoku[9][9], bool notEditables[9][9]);
+
+void finalScreen();
+
+void saveSudoku(int sudoku[9][9]);
 
 #endif	/* HELPERS_H */
 
